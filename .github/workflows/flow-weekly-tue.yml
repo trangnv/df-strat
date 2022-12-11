@@ -1,14 +1,8 @@
-name: df daily test 2
+name: df weekly
 
 on:
   schedule:
-    - cron: "0 12 * * *"
-  workflow_dispatch:
-    inputs:
-      amt_of_tokens:
-        description: "Amount of tokens to distribute"
-        required: true
-        default: "50000"
+    - cron: "0 0 * * 2"
 
 jobs:
   calculate-reward-and-eda:
@@ -52,7 +46,7 @@ jobs:
           echo "SECRET_SEED=${{ secrets.SECRET_SEED }}" >> $GITHUB_ENV
           echo "date=$(date -dlast-thursday '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "now=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
-          echo "CSV_DIR=strat/parsed_data/df-flow-day2-$(date '+%W-%a-%Y-%m-%d')" >> $GITHUB_ENV
+          echo "CSV_DIR=strat/parsed_data/df-flow-week-$(date '+%W-%a-%Y-%m-%d')" >> $GITHUB_ENV
           echo "TOKEN_AMOUNT=50000" >> $GITHUB_ENV
 
       - name: Run dftool getrate
@@ -80,12 +74,25 @@ jobs:
         run: |
           ./dftool allocations $date $now 200 $CSV_DIR 1
 
+      # - name: Run sed
+      #   run: |
+      #     cp $CSV_DIR/rate-OCEAN.csv $CSV_DIR/rate-MOCEAN.csv
+      #     sed -i -e 's/MOCEAN/OCEAN/g' $CSV_DIR/rate-MOCEAN.csv
+
       - name: Run dftool calc
         run: |
-          ./dftool calc $CSV_DIR ${{ github.event.inputs.amt_of_tokens || secrets.TOKEN_AMOUNT }} OCEAN
+          ./dftool calc $CSV_DIR $TOKEN_AMOUNT OCEAN
+
+      # ./dftool calc $CSV_DIR ${{ github.event.inputs.amt_of_tokens || TOKEN_AMOUNT }} OCEAN
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: CSV Files
+      #     path: /tmp/csv
+
       - name: eda
         run: |
-          python ./strat/dftooleda.py eda $CSV_DIR daily-report
+          python ./strat/dftooleda.py eda $CSV_DIR weekly-report
       - name: Commit and Push Changes
         run: |
           git config --local user.email "actions@github.com"
