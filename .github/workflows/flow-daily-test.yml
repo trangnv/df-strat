@@ -2,7 +2,7 @@ name: df daily test
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/48 * * * *"
 
 jobs:
   calculate-reward-and-eda:
