@@ -2,8 +2,7 @@ name: df daily test
 
 on:
   schedule:
-    # Runs "at minute 55 past every hour" (see https://crontab.guru)
-    - cron: "*/16 * * * *"
+    - cron: "*/15 * * * *"
 
 jobs:
   calculate-reward-and-eda:
