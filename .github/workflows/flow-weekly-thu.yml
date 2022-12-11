@@ -1,4 +1,4 @@
-name: df weekly
+name: DF weekly report
 
 on:
   schedule:

@@ -1,8 +1,14 @@
-name: df weekly
+name: DF midweek report (Saturday - voting day)
 
 on:
   schedule:
     - cron: "0 0 * * 6"
+  workflow_dispatch:
+    inputs:
+      amt_of_tokens:
+        description: "Amount of tokens to distribute"
+        required: true
+        default: "50000"
 
 jobs:
   calculate-reward-and-eda:
@@ -81,7 +87,7 @@ jobs:
 
       - name: Run dftool calc
         run: |
-          ./dftool calc $CSV_DIR $TOKEN_AMOUNT OCEAN
+          ./dftool calc $CSV_DIR ${{ github.event.inputs.amt_of_tokens || secrets.TOKEN_AMOUNT }} OCEAN
 
       # ./dftool calc $CSV_DIR ${{ github.event.inputs.amt_of_tokens || TOKEN_AMOUNT }} OCEAN
       # - name: Upload artifacts
