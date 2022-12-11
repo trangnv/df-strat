@@ -1,8 +1,8 @@
-name: Reward Calculation and EDA
+name: Reward Calculation and EDA daily test
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "11 * * * *"
 
 jobs:
   calculate-reward-and-eda:

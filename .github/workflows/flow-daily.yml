@@ -1,5 +1,4 @@
-name: Reward Calculation and EDA
-
+name: Reward Calculation and EDA daily
 on:
   schedule:
     - cron: "0 0 * * *"

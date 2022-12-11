@@ -1,4 +1,4 @@
-name: Reward Calculation and EDA
+name: Reward Calculation and EDA weekly
 
 on:
   schedule:
