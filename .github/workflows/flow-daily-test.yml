@@ -1,4 +1,4 @@
-name: Reward Calculation and EDA daily test
+name: df daily test
 
 on:
   schedule:

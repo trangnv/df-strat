@@ -1,4 +1,4 @@
-name: Reward Calculation and EDA weekly
+name: df weekly
 
 on:
   schedule:
