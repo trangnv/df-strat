@@ -45,9 +45,9 @@ def do_eda(dir_path, markdown_file, mode, text):
             "0x967da4048cd07ab37855c090aaf366e4ce1b9f48",
         ],
     )
-    nft_vol1 = top_table_markdown(nft_vol1)
-    nft_vol2 = top_table_markdown(nft_vol2)
-    nft_vol3 = top_table_markdown(nft_vol3)
+    nft_vol1m = top_table_markdown(nft_vol1)
+    nft_vol2m = top_table_markdown(nft_vol2)
+    nft_vol3m = top_table_markdown(nft_vol3)
 
     # nft_lp_reward = load_nft_lp_reward(dir_path, wallet_dict)
     # nft_reward = load_nft_reward(dir_path)
@@ -66,7 +66,7 @@ def do_eda(dir_path, markdown_file, mode, text):
     markdown_text = f"""## {text}-{today} 
 
 ### Top nft volume on Polygon, base token Polygon
-{nft_vol1}
+{nft_vol1m}
 
 """
     with open(markdown_file, mode) as f:
@@ -75,7 +75,7 @@ def do_eda(dir_path, markdown_file, mode, text):
     markdown_text = f"""## {text}-{today} 
 
 ### Top nft volume on Polygon, base token Ocean
-{nft_vol2}
+{nft_vol2m}
 
 """
     with open(markdown_file, "a") as f:
@@ -84,7 +84,7 @@ def do_eda(dir_path, markdown_file, mode, text):
     markdown_text = f"""## {text}-{today} 
 
 ### Top nft volume on ethereum, base token Ocean
-{nft_vol3}
+{nft_vol3m}
 
 ### Top player with most reward
 {top_reward_receiver}
@@ -101,6 +101,21 @@ def do_eda(dir_path, markdown_file, mode, text):
     # print(top_nft_vol)
 
     for nft_addr in list(nft_vol2["nft_addr"].head(5).unique()):
+        _df = ve_allocation.loc[ve_allocation["nft_addr"] == nft_addr]
+        _df = _df.sort_values(["allocation"], ascending=[False]).reset_index(drop=True)
+        top_nft_allocation = top_table_markdown(
+            _df[
+                ["LP_addr", "allocation", "LP_addr_label", "percent", "balance"]
+            ]  # add "balance" to show ve_balance
+        )
+        markdown_text = f"""- `{nft_addr}`\n
+{top_nft_allocation}
+
+"""
+        with open(markdown_file, "a") as f:
+            f.write(markdown_text)
+
+    for nft_addr in list(nft_vol3["nft_addr"].head(5).unique()):
         _df = ve_allocation.loc[ve_allocation["nft_addr"] == nft_addr]
         _df = _df.sort_values(["allocation"], ascending=[False]).reset_index(drop=True)
         top_nft_allocation = top_table_markdown(
