@@ -1,8 +1,7 @@
 import pandas as pd
-from glob import glob
 from enforce_typing import enforce_types
 import requests
-import datetime
+from datetime import datetime
 
 # data_dir = "mydata"
 
