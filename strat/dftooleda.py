@@ -84,7 +84,7 @@ def do_eda(dir_path, markdown_file, mode, text):
 {top_nft_allocation}
 
 """
-        with open(markdown_file, mode) as f:
+        with open(markdown_file, "a") as f:
             f.write(markdown_text)
 
 
