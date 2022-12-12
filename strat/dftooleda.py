@@ -15,10 +15,6 @@ from utils.load_data import (
 )
 
 
-"""
-To run every Thursday, 00:00 UTC, github cron is in UTC time, just like scheduled by Ocean
-This give result for last round df stats
-"""
 wallet_dict = {
     "0x8475b523b5fa2db7b77eb5f14edabdefc2102698": "psdn",
     "0x2e434c18ae93ee2da937222ea5444692ed265ac0": "whale1",
@@ -50,9 +46,10 @@ def do_eda(dir_path, markdown_file, mode, text):
 
     top_nft_vol = top_table_markdown(nft_vol2[["nft_addr", "vol_amt", "vol_perc"]])
     top_reward_receiver = top_table_markdown(
-        lp_reward[
-            ["LP_addr", "nft_addr", "OCEAN_amt", "reward_perc_per_LP", "LP_addr_label"]
-        ]
+        lp_reward
+        # [
+        #     ["LP_addr", "OCEAN_amt", "reward_perc_per_LP", "LP_addr_label"]
+        # ]
     )
 
     today = datetime.now().strftime("%W-%a-%Y-%m-%d")
