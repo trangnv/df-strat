@@ -2,6 +2,7 @@ import pandas as pd
 from glob import glob
 from enforce_typing import enforce_types
 import requests
+import datetime
 
 # data_dir = "mydata"
 
@@ -19,7 +20,9 @@ def load_ve_balance(dir_path):
     file_path = dir_path + "/vebals.csv"
     df = pd.read_csv(file_path)
 
-    week = int(dir_path[31:33])
+    # week = int(dir_path[31:33])
+    today = datetime.now()
+    week = today.strftime("%W")
     df["week"] = week
 
     total_ve = df["balance"].sum()
@@ -45,7 +48,9 @@ def load_ve_allocation_pct(dir_path):
     file_path = dir_path + "/allocations.csv"
     df = pd.read_csv(file_path)
 
-    week = int(dir_path[31:33])
+    # week = int(dir_path[31:33])
+    today = datetime.now()
+    week = today.strftime("%W")
     df["week"] = week
 
     # ve_allocation_pct = ve_allocation_pct.sort_values(
@@ -77,8 +82,10 @@ def load_lp_reward(dir_path, wallet_dict):
     file_path = dir_path + "/rewardsperlp-OCEAN.csv"
     df = pd.read_csv(file_path)
 
-    week = int(dir_path[31:33])
-    df["week"] = week
+    # week = int(dir_path[31:33])
+    today = datetime.now()
+    week = today.strftime("%W")
+    # df["week"] = week
     df = df.sort_values("OCEAN_amt", ascending=False).reset_index(drop=True)
 
     df["reward_perc_per_LP"] = df["OCEAN_amt"] / total_reward * 100
@@ -106,7 +113,9 @@ def load_nft_reward(dir_path):
     # total_reward = get_total_reward(dir_path)
     # for dir_path in glob(f"{data_dir}/*/", recursive=False):
     file_path = dir_path + "/rewardsinfo-OCEAN.csv"
-    week = int(dir_path[31:33])
+    # week = int(dir_path[31:33])
+    today = datetime.now()
+    week = today.strftime("%W")
     df = pd.read_csv(file_path)
 
     x = []
@@ -153,8 +162,10 @@ def load_nft_lp_reward(dir_path, wallet_dict):
     file_path = dir_path + "/rewardsinfo-OCEAN.csv"
     df = pd.read_csv(file_path)
 
-    week = int(dir_path[31:33])
-    df["week"] = week
+    # week = int(dir_path[31:33])
+    # df["week"] = week
+    today = datetime.now()
+    week = today.strftime("%W")
     # nft_lp_reward = nft_lp_reward.append(df, ignore_index=True)
     nft_lp_reward["LP_addr_label"] = nft_lp_reward["LP_addr"].map(wallet_dict)
     return nft_lp_reward
@@ -167,7 +178,9 @@ def load_nft_vol(dir_path, basetoken_addr1, basetoken_addr2):
     for chainID in (1, 56, 137, 246, 1285):
         # try:
         file_path = f"{dir_path}/nftvols-{chainID}.csv"
-        week = int(dir_path[31:33])
+        # week = int(dir_path[31:33])
+        today = datetime.now()
+        week = today.strftime("%W")
         df = pd.read_csv(file_path)
         df["week"] = week
         df.sort_values(["vol_amt"], ascending=[False]).reset_index(
