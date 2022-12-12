@@ -57,7 +57,7 @@ def do_eda(dir_path, markdown_file, mode, text):
 
     today = datetime.now().strftime("%W-%a-%Y-%m-%d")
 
-    markdown_text = f"""## {text} {today} 
+    markdown_text = f"""## {text}-{today} 
 
 ### Top nft volume on Polygon, base token Ocean
 {top_nft_vol}
