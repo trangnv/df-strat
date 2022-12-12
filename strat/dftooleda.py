@@ -1,5 +1,5 @@
 import sys
-import os
+from datetime import datetime
 
 from enforce_typing import enforce_types
 
@@ -27,7 +27,7 @@ wallet_dict = {
     "0xf0a8802509421df907188434d4fc230cf9271672": "shrimp1",
     "0xcf8a4b99640defaf99acae9d770dec9dff37927d": "shrimp2",
     "0x663052ad99b85a8c35040c4fd1cc87620f4b61f1": "shrimp3",
-    "0xeb18bad7365a40e36a41fb8734eb0b855d13b74f": "owner1",
+    "0xeb18bad7365a40e36a41fb8734eb0b855d13b74f": "shrimp1",
 }
 
 
@@ -50,10 +50,14 @@ def do_eda(dir_path, markdown_file, mode, text):
 
     top_nft_vol = top_table_markdown(nft_vol2[["nft_addr", "vol_amt", "vol_perc"]])
     top_reward_receiver = top_table_markdown(
-        lp_reward[["LP_addr", "OCEAN_amt", "reward_perc_per_LP", "LP_addr_label"]]
+        lp_reward[
+            ["LP_addr", "nft_addr", "OCEAN_amt", "reward_perc_per_LP", "LP_addr_label"]
+        ]
     )
 
-    markdown_text = f"""## {text} {dir_path[31:48]} 
+    today = datetime.now().strftime("%W-%a-%Y-%m-%d")
+
+    markdown_text = f"""## {text} {today} 
 
 ### Top nft volume on Polygon, base token Ocean
 {top_nft_vol}
