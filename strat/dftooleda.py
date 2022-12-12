@@ -37,16 +37,22 @@ def do_eda(dir_path, markdown_file, mode, text):
     # total_reward = get_total_reward(dir_path)
 
     lp_reward = load_lp_reward(dir_path, wallet_dict)
-    nft_vol1, nft_vol2 = load_nft_vol(
-        dir_path, "0xpolygon", "0x282d8efce846a88b159800bd4130ad77443fa1a1"
+    nft_vol1, nft_vol2, nft_vol3 = load_nft_vol(
+        dir_path,
+        [
+            "0xpolygon",
+            "0x282d8efce846a88b159800bd4130ad77443fa1a1",
+            "0x967da4048cd07ab37855c090aaf366e4ce1b9f48",
+        ],
     )
 
     # nft_lp_reward = load_nft_lp_reward(dir_path, wallet_dict)
     # nft_reward = load_nft_reward(dir_path)
 
-    top_nft_vol = top_table_markdown(nft_vol2[["nft_addr", "vol_amt", "vol_perc"]])
+    # top_nft_vol = top_table_markdown(nft_vol2[["nft_addr", "vol_amt", "vol_perc"]])
     top_reward_receiver = top_table_markdown(
-        lp_reward
+        lp_reward,
+        top=10
         # [
         #     ["LP_addr", "OCEAN_amt", "reward_perc_per_LP", "LP_addr_label"]
         # ]
@@ -56,15 +62,33 @@ def do_eda(dir_path, markdown_file, mode, text):
 
     markdown_text = f"""## {text}-{today} 
 
+### Top nft volume on Polygon, base token Polygon
+{nft_vol1}
+
+"""
+    with open(markdown_file, mode) as f:
+        f.write(markdown_text)
+
+    markdown_text = f"""## {text}-{today} 
+
 ### Top nft volume on Polygon, base token Ocean
-{top_nft_vol}
+{nft_vol2}
+
+"""
+    with open(markdown_file, "a") as f:
+        f.write(markdown_text)
+
+    markdown_text = f"""## {text}-{today} 
+
+### Top nft volume on ethereum, base token Ocean
+{nft_vol3}
 
 ### Top player with most reward
 {top_reward_receiver}
 
 ### Allocations on top nft volume
 """
-    with open(markdown_file, mode) as f:
+    with open(markdown_file, "a") as f:
         f.write(markdown_text)
 
     # who allocate there

@@ -170,7 +170,7 @@ def load_nft_lp_reward(dir_path, wallet_dict):
     return nft_lp_reward
 
 
-def load_nft_vol(dir_path, basetoken_addr1, basetoken_addr2):
+def load_nft_vol(dir_path, basetoken_addr):
     nft_vol = pd.DataFrame(
         columns=["chainID", "basetoken_addr", "nft_addr", "vol_amt", "week"]
     )
@@ -187,8 +187,9 @@ def load_nft_vol(dir_path, basetoken_addr1, basetoken_addr2):
         )
         nft_vol = nft_vol.append(df, ignore_index=True)
 
-    nft_vol1 = nft_vol.loc[nft_vol["basetoken_addr"] == basetoken_addr1]
-    nft_vol2 = nft_vol.loc[nft_vol["basetoken_addr"] == basetoken_addr2]
+    nft_vol1 = nft_vol.loc[nft_vol["basetoken_addr"] == basetoken_addr[0]]
+    nft_vol2 = nft_vol.loc[nft_vol["basetoken_addr"] == basetoken_addr[1]]
+    nft_vol3 = nft_vol.loc[nft_vol["basetoken_addr"] == basetoken_addr[2]]
 
     nft_vol1 = nft_vol1.sort_values(["vol_amt"], ascending=[False]).reset_index(
         drop=True
@@ -196,13 +197,18 @@ def load_nft_vol(dir_path, basetoken_addr1, basetoken_addr2):
     nft_vol2 = nft_vol2.sort_values(["vol_amt"], ascending=[False]).reset_index(
         drop=True
     )
+    nft_vol3 = nft_vol3.sort_values(["vol_amt"], ascending=[False]).reset_index(
+        drop=True
+    )
 
     nft_vol1_total = nft_vol1["vol_amt"].sum()
     nft_vol2_total = nft_vol2["vol_amt"].sum()
+    nft_vol3_total = nft_vol3["vol_amt"].sum()
 
     nft_vol1["vol_perc"] = nft_vol1["vol_amt"] / nft_vol1_total * 100
     nft_vol2["vol_perc"] = nft_vol2["vol_amt"] / nft_vol2_total * 100
-    return nft_vol1, nft_vol2
+    nft_vol3["vol_perc"] = nft_vol3["vol_amt"] / nft_vol3_total * 100
+    return nft_vol1, nft_vol2, nft_vol3
 
 
 def get_total_reward(dir_path):
