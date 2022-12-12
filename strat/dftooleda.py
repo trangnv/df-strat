@@ -45,6 +45,9 @@ def do_eda(dir_path, markdown_file, mode, text):
             "0x967da4048cd07ab37855c090aaf366e4ce1b9f48",
         ],
     )
+    nft_vol1 = top_table_markdown(nft_vol1)
+    nft_vol2 = top_table_markdown(nft_vol2)
+    nft_vol3 = top_table_markdown(nft_vol3)
 
     # nft_lp_reward = load_nft_lp_reward(dir_path, wallet_dict)
     # nft_reward = load_nft_reward(dir_path)
