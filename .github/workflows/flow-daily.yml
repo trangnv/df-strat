@@ -2,7 +2,7 @@ name: DF daily report
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 9 * * *"
   workflow_dispatch:
     inputs:
       amt_of_tokens:
@@ -90,6 +90,6 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add .
+          git add strat/DAILY_REPORT
           git commit -m "Updated on `date` with GitHub Actions" || echo "No Changes to Commit"
           git push origin main || echo "No Changes to Commit"
