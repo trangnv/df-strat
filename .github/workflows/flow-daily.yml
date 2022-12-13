@@ -90,6 +90,6 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add strat/DAILY_REPORT
+          git add strat/DAILY_REPORT.MD
           git commit -m "Updated on `date` with GitHub Actions" || echo "No Changes to Commit"
           git push origin main || echo "No Changes to Commit"
