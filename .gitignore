@@ -7,3 +7,4 @@ build/
 .env
 .idea/
 __pycache__
+strat/tmp/

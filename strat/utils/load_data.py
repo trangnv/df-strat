@@ -61,6 +61,9 @@ def cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict):
     ve_allocation["LP_addr_label"] = ve_allocation["LP_addr_label"].fillna(
         value="unknown"
     )
+    ve_allocation = ve_allocation.sort_values(
+        ["allocation"], ascending=[False]
+    ).reset_index(drop=True)
     return ve_allocation
 
 
@@ -166,7 +169,7 @@ def load_nft_vol(dir_path, basetoken_addr):
     nft_vol = pd.DataFrame(
         columns=["chainID", "basetoken_addr", "nft_addr", "vol_amt", "week"]
     )
-    for chainID in (1, 56, 137, 246, 1285):
+    for chainID in (1, 56, 137, 1285):
         file_path = f"{dir_path}/nftvols-{chainID}.csv"
         today = datetime.now()
         week = today.strftime("%W")

@@ -74,12 +74,12 @@ def do_nft_vol(dir_path, markdown_file, text):
 
     dt = today.strftime("%W-%a-%Y-%m-%d")
 
-    markdown_text = f"""## {text}-{dt} 
-
-### Top nft volume on Polygon, base token Ocean
+    markdown_text = f"""# Week-{dt} 
+## Top NFT volume
+### Polygon, base token Ocean
 {top_table_markdown(nft_vol['0x282d8efce846a88b159800bd4130ad77443fa1a1'][['nft_addr', 'vol_amt','vol_perc']])}
 
-### Top nft volume on Ethereum, base token Ocean
+### Ethereum, base token Ocean
 {top_table_markdown(nft_vol['0x967da4048cd07ab37855c090aaf366e4ce1b9f48'][['nft_addr', 'vol_amt','vol_perc']])}
 """
     with open(markdown_file, "w") as f:
@@ -92,14 +92,15 @@ def do_allocation(dir_path, markdown_file, text):
     ve_allocation_pct = load_ve_allocation_pct(dir_path)
     ve_allocation = cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict)
 
-    dt = today.strftime("%W-%a-%Y-%m-%d")
-    markdown_text = f"""## {text}-{dt} 
-
-### Top LP
-{top_table_markdown(ve_allocation,10)}
+    # dt = today.strftime("%W-%a-%Y-%m-%d")
+    _ve_allocation = ve_allocation[
+        ["nft_addr", "LP_addr", "allocation", "LP_addr_label"]
+    ]
+    markdown_text = f"""## Top LP
+{top_table_markdown(_ve_allocation,10)}
 
 """
-    with open(markdown_file, "w") as f:
+    with open(markdown_file, "a") as f:
         f.write(markdown_text)
 
 
@@ -108,15 +109,12 @@ def do_main():
     assert sys.argv[1] == "eda"
     dir_path = sys.argv[2]
     dt = today.strftime("%W-%a-%Y-%m-%d")
-    if sys.argv[3] == "weekly-report":
-        markdown_file = f"strat/reports/weekly/week-{dt}.MD"
-        text = "Week"
+    if sys.argv[3] == "report":
+        markdown_file = f"strat/reports/report-{dt}.MD"
+        text = "NFT volume"
         do_nft_vol(dir_path, markdown_file, text)
-
-    elif sys.argv[3] == "lp-report":
-        markdown_file = f"strat/reports/allocation/allocation-{dt}.MD"
         text = "Allocation"
-        do_allocation(markdown_file, markdown_file, text)
+        do_allocation(dir_path, markdown_file, text)
 
 
 if __name__ == "__main__":
