@@ -78,10 +78,26 @@ def do_eda_weekly(dir_path, markdown_file, text):
 
 ### Top nft volume on Polygon, base token Ocean
 {top_table_markdown(nft_vol['0x282d8efce846a88b159800bd4130ad77443fa1a1'][['nft_addr', 'vol_amt','vol_perc']])}
-## LP:
 
 ### Top nft volume on Ethereum, base token Ocean
 {top_table_markdown(nft_vol['0x967da4048cd07ab37855c090aaf366e4ce1b9f48'][['nft_addr', 'vol_amt','vol_perc']])}
+"""
+    with open(markdown_file, "w") as f:
+        f.write(markdown_text)
+
+
+@enforce_types
+def do_eda_allocation(dir_path, markdown_file, text):
+    ve_balance = load_ve_balance(dir_path)
+    ve_allocation_pct = load_ve_allocation_pct(dir_path)
+    ve_allocation = cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict)
+
+    dt = today.strftime("%W-%a-%Y-%m-%d")
+    markdown_text = f"""## {text}-{dt} 
+
+### Top LP
+{top_table_markdown(ve_allocation,10)}
+
 """
     with open(markdown_file, "w") as f:
         f.write(markdown_text)
@@ -97,9 +113,10 @@ def do_main():
         text = "Week"
         do_eda_weekly(dir_path, markdown_file, text)
 
-    elif sys.argv[3] == "voting-report":
-        markdown_file = "strat/VOTING_REPORT.MD"
-        text = "Voting"
+    elif sys.argv[3] == "lp-report":
+        markdown_file = f"strat/reports/allocation/allocation-{dt}.MD"
+        text = "Allocation"
+        do_eda_allocation(markdown_file)
 
 
 if __name__ == "__main__":
