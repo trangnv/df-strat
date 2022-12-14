@@ -45,7 +45,7 @@ def top_nft_allocation(nft_vol, ve_allocation):
 
 
 @enforce_types
-def do_eda(dir_path, markdown_file, mode, text):
+def do_eda_weekly(dir_path, markdown_file, text):
     # total_reward = get_total_reward(dir_path)
 
     lp_reward = load_lp_reward(dir_path, wallet_dict)
@@ -77,20 +77,13 @@ def do_eda(dir_path, markdown_file, mode, text):
     markdown_text = f"""## {text}-{dt} 
 
 ### Top nft volume on Polygon, base token Ocean
-{top_table_markdown(nft_vol['0x282d8efce846a88b159800bd4130ad77443fa1a1'])}
+{top_table_markdown(nft_vol['0x282d8efce846a88b159800bd4130ad77443fa1a1'][['nft_addr', 'vol_amt','vol_perc']])}
 ## LP:
 
 ### Top nft volume on Ethereum, base token Ocean
-{top_table_markdown(nft_vol['0x967da4048cd07ab37855c090aaf366e4ce1b9f48'])}
+{top_table_markdown(nft_vol['0x967da4048cd07ab37855c090aaf366e4ce1b9f48'][['nft_addr', 'vol_amt','vol_perc']])}
 """
-
-    markdown_text += """
-a
-a
-a
-    
-"""
-    with open(markdown_file, "a") as f:
+    with open(markdown_file, "w") as f:
         f.write(markdown_text)
 
 
@@ -101,17 +94,12 @@ def do_main():
     dt = today.strftime("%W-%a-%Y-%m-%d")
     if sys.argv[3] == "weekly-report":
         markdown_file = f"strat/reports/weekly/week-{dt}.MD"
-        mode = "w"
         text = "Week"
+        do_eda_weekly(dir_path, markdown_file, text)
+
     elif sys.argv[3] == "voting-report":
         markdown_file = "strat/VOTING_REPORT.MD"
-        mode = "a"
-        text = "Week"
-    elif sys.argv[3] == "daily-report":
-        markdown_file = "strat/DAILY_REPORT.MD"
-        mode = "w"
-        text = "Day"
-    do_eda(dir_path, markdown_file, mode, text)
+        text = "Voting"
 
 
 if __name__ == "__main__":
