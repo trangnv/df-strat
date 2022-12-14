@@ -22,10 +22,14 @@ wallet_dict = {
     "0x2e434c18ae93ee2da937222ea5444692ed265ac0": "whale1",
     "0xc1b8665bae4389d95d558ff3a0e58c2a24625f63": "whale2",
     "0xac517ed8283d629dd01fac97ece9f91b218203f9": "whale3",
-    "0xf0a8802509421df907188434d4fc230cf9271672": "shrimp1",
-    "0xcf8a4b99640defaf99acae9d770dec9dff37927d": "shrimp2",
-    "0x663052ad99b85a8c35040c4fd1cc87620f4b61f1": "shrimp3",
-    "0xeb18bad7365a40e36a41fb8734eb0b855d13b74f": "shrimp1",
+    "0xf0a8802509421df907188434d4fc230cf9271672": "wallet_1",
+    "0xcf8a4b99640defaf99acae9d770dec9dff37927d": "wallet_2",
+    "0x663052ad99b85a8c35040c4fd1cc87620f4b61f1": "wallet_3",
+    "0xeb18bad7365a40e36a41fb8734eb0b855d13b74f": "wallet_4",
+    "0x8978be1b2082d10ea95533d2897ddab53afb97e9": "wallet_5",
+    "0x655efe6eb2021b8cefe22794d90293aec37bb325": "wallet_6",
+    "0xce74a5886ea7a8a675d8fb5fc11a697a23fe1dc8": "wallet_7",
+    "0xf062d1b3f658ad32f7896a76807b05ba7a9e7720": "wallet_8",
 }
 
 
@@ -60,7 +64,7 @@ def do_nft_vol(dir_path, markdown_file, text):
     nft_vol = {}
     # top_nft_allocation = {}
     for basetoken_addr in basetoken_addresses:
-        nft_vol[basetoken_addr] = load_nft_vol(dir_path, basetoken_addr)
+        nft_vol[basetoken_addr] = load_nft_vol(dir_path, basetoken_addr, wallet_dict)
 
     # for basetoken_addr in basetoken_addresses:
     #     top_nft_allocation[basetoken_addr] = top_nft_allocation(
@@ -77,10 +81,10 @@ def do_nft_vol(dir_path, markdown_file, text):
     markdown_text = f"""# Week-{dt} 
 ## Top NFT volume
 ### Polygon, base token Ocean
-{top_table_markdown(nft_vol['0x282d8efce846a88b159800bd4130ad77443fa1a1'][['nft_addr', 'vol_amt','vol_perc']])}
+{top_table_markdown(nft_vol['0x282d8efce846a88b159800bd4130ad77443fa1a1'][['nft_addr', 'owner_label','vol_amt','vol_perc']])}
 
 ### Ethereum, base token Ocean
-{top_table_markdown(nft_vol['0x967da4048cd07ab37855c090aaf366e4ce1b9f48'][['nft_addr', 'vol_amt','vol_perc']])}
+{top_table_markdown(nft_vol['0x967da4048cd07ab37855c090aaf366e4ce1b9f48'][['nft_addr', 'owner_label','vol_amt','vol_perc']])}
 """
     with open(markdown_file, "w") as f:
         f.write(markdown_text)
@@ -110,7 +114,7 @@ def do_main():
     dir_path = sys.argv[2]
     dt = today.strftime("%W-%a-%Y-%m-%d")
     if sys.argv[3] == "report":
-        markdown_file = f"strat/reports/Report-{dt}.MD"
+        markdown_file = f"strat/reports/report-{dt}.MD"
         text = "NFT volume"
         do_nft_vol(dir_path, markdown_file, text)
         text = "Allocation"

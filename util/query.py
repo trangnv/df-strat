@@ -403,6 +403,9 @@ def _queryNftvolumes(
               symbol
               nft {
                 id
+                # owner {
+                #   id
+                # }
               }
               dispensers {
                 id
