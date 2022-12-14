@@ -110,7 +110,7 @@ def do_main():
     dir_path = sys.argv[2]
     dt = today.strftime("%W-%a-%Y-%m-%d")
     if sys.argv[3] == "report":
-        markdown_file = f"strat/reports/report-{dt}.MD"
+        markdown_file = f"strat/Reports/report-{dt}.MD"
         text = "NFT volume"
         do_nft_vol(dir_path, markdown_file, text)
         text = "Allocation"
