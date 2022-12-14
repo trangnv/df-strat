@@ -34,103 +34,64 @@ def top_table_markdown(df, top=5):
     return top_table_markdown
 
 
+def top_nft_allocation(nft_vol, ve_allocation):
+    for nft_addr in list(nft_vol["nft_addr"].head(5).unique()):
+        _df = ve_allocation.loc[ve_allocation["nft_addr"] == nft_addr]
+        _df = _df.sort_values(["allocation"], ascending=[False]).reset_index(drop=True)
+        top_nft_allocation = top_table_markdown(
+            _df[["LP_addr", "allocation", "LP_addr_label", "percent", "balance"]]
+        )
+    return top_nft_allocation
+
+
 @enforce_types
 def do_eda(dir_path, markdown_file, mode, text):
     # total_reward = get_total_reward(dir_path)
 
     lp_reward = load_lp_reward(dir_path, wallet_dict)
-    nft_vol1, nft_vol2, nft_vol3 = load_nft_vol(
-        dir_path,
-        [
-            "0xpolygon",
-            "0x282d8efce846a88b159800bd4130ad77443fa1a1",
-            "0x967da4048cd07ab37855c090aaf366e4ce1b9f48",
-        ],
-    )
-    nft_vol1m = top_table_markdown(nft_vol1)
-    nft_vol2m = top_table_markdown(nft_vol2)
-    nft_vol3m = top_table_markdown(nft_vol3)
+    ve_balance = load_ve_balance(dir_path)
+    ve_allocation_pct = load_ve_allocation_pct(dir_path)
+    ve_allocation = cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict)
+    basetoken_addresses = [
+        "0xpolygon",
+        "0x282d8efce846a88b159800bd4130ad77443fa1a1",
+        "0x967da4048cd07ab37855c090aaf366e4ce1b9f48",
+    ]
+    nft_vol = {}
+    # top_nft_allocation = {}
+    for basetoken_addr in basetoken_addresses:
+        nft_vol[basetoken_addr] = load_nft_vol(dir_path, basetoken_addr)
+
+    # for basetoken_addr in basetoken_addresses:
+    #     top_nft_allocation[basetoken_addr] = top_nft_allocation(
+    #         nft_vol[basetoken_addr], ve_allocation
+    #     )
 
     # nft_lp_reward = load_nft_lp_reward(dir_path, wallet_dict)
     # nft_reward = load_nft_reward(dir_path)
 
-    # top_nft_vol = top_table_markdown(nft_vol2[["nft_addr", "vol_amt", "vol_perc"]])
-    top_reward_receiver = top_table_markdown(
-        lp_reward,
-        top=10
-        # [
-        #     ["LP_addr", "OCEAN_amt", "reward_perc_per_LP", "LP_addr_label"]
-        # ]
-    )
+    top_reward_receiver = top_table_markdown(lp_reward, top=10)
 
     dt = today.strftime("%W-%a-%Y-%m-%d")
 
     markdown_text = f"""## {text}-{dt} 
 
-### Top nft volume on Polygon, base token Polygon
-{nft_vol1m}
-
-"""
-    with open(markdown_file, mode) as f:
-        f.write(markdown_text)
-
-    markdown_text = f"""## {text}-{dt} 
-
 ### Top nft volume on Polygon, base token Ocean
-{nft_vol2m}
+{top_table_markdown(nft_vol['0x282d8efce846a88b159800bd4130ad77443fa1a1'])}
+## LP:
 
+### Top nft volume on Ethereum, base token Ocean
+{top_table_markdown(nft_vol['0x967da4048cd07ab37855c090aaf366e4ce1b9f48'])}
+"""
+
+    markdown_text += """
+a
+a
+a
+    
 """
     with open(markdown_file, "a") as f:
         f.write(markdown_text)
-
-    markdown_text = f"""## {text}-{dt} 
-
-### Top nft volume on ethereum, base token Ocean
-{nft_vol3m}
-
-### Top player with most reward
-{top_reward_receiver}
-
-### Allocations on top nft volume
-"""
-    with open(markdown_file, "a") as f:
-        f.write(markdown_text)
-
-    # who allocate there
-    ve_balance = load_ve_balance(dir_path)
-    ve_allocation_pct = load_ve_allocation_pct(dir_path)
-    ve_allocation = cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict)
-    # print(top_nft_vol)
-
-    for nft_addr in list(nft_vol2["nft_addr"].head(5).unique()):
-        _df = ve_allocation.loc[ve_allocation["nft_addr"] == nft_addr]
-        _df = _df.sort_values(["allocation"], ascending=[False]).reset_index(drop=True)
-        top_nft_allocation = top_table_markdown(
-            _df[
-                ["LP_addr", "allocation", "LP_addr_label", "percent", "balance"]
-            ]  # add "balance" to show ve_balance
-        )
-        markdown_text = f"""- `{nft_addr}`\n
-{top_nft_allocation}
-
-"""
-        with open(markdown_file, "a") as f:
-            f.write(markdown_text)
-
-    for nft_addr in list(nft_vol3["nft_addr"].head(5).unique()):
-        _df = ve_allocation.loc[ve_allocation["nft_addr"] == nft_addr]
-        _df = _df.sort_values(["allocation"], ascending=[False]).reset_index(drop=True)
-        top_nft_allocation = top_table_markdown(
-            _df[
-                ["LP_addr", "allocation", "LP_addr_label", "percent", "balance"]
-            ]  # add "balance" to show ve_balance
-        )
-        markdown_text = f"""- `{nft_addr}`\n
-{top_nft_allocation}
-
-"""
-        with open(markdown_file, "a") as f:
-            f.write(markdown_text)
 
 
 @enforce_types
