@@ -96,12 +96,17 @@ def do_allocation(dir_path, markdown_file, text):
     ve_allocation_pct = load_ve_allocation_pct(dir_path)
     ve_allocation = cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict)
 
+    psdn_allocation = ve_allocation.loc[ve_allocation["LP_addr_label"] == "psdn"]
+
     # dt = today.strftime("%W-%a-%Y-%m-%d")
     _ve_allocation = ve_allocation[
-        ["nft_addr", "LP_addr", "allocation", "LP_addr_label"]
+        ["nft_addr", "LP_addr", "allocation", "percent", "LP_addr_label"]
     ]
     markdown_text = f"""## Top LP
-{top_table_markdown(_ve_allocation,10)}
+{top_table_markdown(_ve_allocation,20)}
+
+## PSDN
+{top_table_markdown(psdn_allocation)}
 
 """
     with open(markdown_file, "a") as f:

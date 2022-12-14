@@ -310,3 +310,21 @@ owner {
     result = submitQuery(query, chainID)
     owner = result["data"]["nfts"][0]["owner"]["id"]
     return owner
+
+
+#     query MyQuery {
+#   nfts(where: {owner: "0x52b4943bae9cbda94f5f7e8b87a038bc96533a33"}) {
+#     address
+#     owner {
+#       id
+#     }
+#   }
+# }
+# query MyQuery {
+#   nfts(where: {address: "0xaedea2a290346b4b9dc9b4d0e8fa27f35bf4b89d"}) {
+#     owner {
+#       id
+#     }
+#     address
+#   }
+# }
