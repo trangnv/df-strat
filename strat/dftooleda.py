@@ -97,7 +97,8 @@ def do_allocation(dir_path, markdown_file, text):
     ve_allocation = cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict)
 
     psdn_allocation = ve_allocation.loc[ve_allocation["LP_addr_label"] == "psdn"]
-
+    # balance	locked_amt
+    # 	'locked_amt'	'unlock_time'		perc	chainID	nft_addr	percent	allocation
     # dt = today.strftime("%W-%a-%Y-%m-%d")
     _ve_allocation = ve_allocation[
         ["nft_addr", "LP_addr", "allocation", "percent", "LP_addr_label"]
