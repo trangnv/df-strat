@@ -275,3 +275,107 @@
 | 0xb1e24789311f14b6270b2b4ed11a768bf9b547ff |     35412.8  | unknown         |     0.26  |  136203   |
 | 0xcd2e9293bf8887bfb61c30740b728f3ad734c3f5 |      7859.76 | unknown         |     0.14  |   56141.2 |
 
+## Week-50-Wed-2022-12-14 
+
+### Top nft volume on Polygon, base token Polygon
+|   chainID | basetoken_addr   | nft_addr                                   |   vol_amt |   week |   vol_perc |
+|----------:|:-----------------|:-------------------------------------------|----------:|-------:|-----------:|
+|       137 | 0xpolygon        | 0x40de175e5de5139c1e754d6fdc8b01ac23065700 | 0.039443  |     50 |   12.1012  |
+|       137 | 0xpolygon        | 0x21457717da4d370ea16a8eaa3cb46ba2f9797ab4 | 0.034274  |     50 |   10.5153  |
+|       137 | 0xpolygon        | 0x7c28f579fdb12b52a3a0bf27cef63868e26e0020 | 0.0316878 |     50 |    9.72189 |
+|       137 | 0xpolygon        | 0xc36bc2aaa1dff1ff92f04dd89708608dc5715beb | 0.0283012 |     50 |    8.68287 |
+|       137 | 0xpolygon        | 0x66405cc1876e49ecd3f9771b030046f5f328892a | 0.0257004 |     50 |    7.88493 |
+
+## Week-50-Wed-2022-12-14 
+
+### Top nft volume on Polygon, base token Ocean
+|   chainID | basetoken_addr                             | nft_addr                                   |   vol_amt |   week |   vol_perc |
+|----------:|:-------------------------------------------|:-------------------------------------------|----------:|-------:|-----------:|
+|       137 | 0x282d8efce846a88b159800bd4130ad77443fa1a1 | 0x7c28f579fdb12b52a3a0bf27cef63868e26e0020 |     70000 |     50 | 98.2925    |
+|       137 | 0x282d8efce846a88b159800bd4130ad77443fa1a1 | 0x001c3d7debe7eff4550a3414ad2fd542020ef947 |       999 |     50 |  1.40277   |
+|       137 | 0x282d8efce846a88b159800bd4130ad77443fa1a1 | 0x57c0d4d22ab9fb7071838db5a4ba3b1ddc4b3e24 |        69 |     50 |  0.0968883 |
+|       137 | 0x282d8efce846a88b159800bd4130ad77443fa1a1 | 0x2d84d50f8e310d370a6d7d0d883f3e537ecce382 |        49 |     50 |  0.0688048 |
+|       137 | 0x282d8efce846a88b159800bd4130ad77443fa1a1 | 0x21457717da4d370ea16a8eaa3cb46ba2f9797ab4 |        22 |     50 |  0.0308919 |
+
+## Week-50-Wed-2022-12-14 
+
+### Top nft volume on ethereum, base token Ocean
+|   chainID | basetoken_addr                             | nft_addr                                   |   vol_amt |   week |   vol_perc |
+|----------:|:-------------------------------------------|:-------------------------------------------|----------:|-------:|-----------:|
+|         1 | 0x967da4048cd07ab37855c090aaf366e4ce1b9f48 | 0x8e1517057a2b30f29e0713c52ca5d957c887da74 |     40100 |     50 |        100 |
+
+### Top player with most reward
+|   chainID | LP_addr                                    |   OCEAN_amt |   reward_perc_per_LP |   week | LP_addr_label   |
+|----------:|:-------------------------------------------|------------:|---------------------:|-------:|:----------------|
+|       137 | 0xf0a8802509421df907188434d4fc230cf9271672 |    8485.06  |             34.2778  |     50 | shrimp1         |
+|         1 | 0x663052ad99b85a8c35040c4fd1cc87620f4b61f1 |    2814.69  |             11.3707  |     50 | shrimp3         |
+|       137 | 0x655efe6eb2021b8cefe22794d90293aec37bb325 |    2797.07  |             11.2996  |     50 | nan             |
+|       137 | 0xcf8a4b99640defaf99acae9d770dec9dff37927d |    2284.11  |              9.22729 |     50 | shrimp2         |
+|         1 | 0x8978be1b2082d10ea95533d2897ddab53afb97e9 |    1801.72  |              7.27857 |     50 | nan             |
+|         1 | 0xcf8a4b99640defaf99acae9d770dec9dff37927d |    1612.31  |              6.51338 |     50 | shrimp2         |
+|       137 | 0xf062d1b3f658ad32f7896a76807b05ba7a9e7720 |     840.085 |              3.39376 |     50 | nan             |
+|         1 | 0xb1e24789311f14b6270b2b4ed11a768bf9b547ff |     727.225 |              2.93783 |     50 | nan             |
+|       137 | 0x69e0e2b3d523d3b247d798a49c3fa022a46dd6bd |     510.913 |              2.06398 |     50 | nan             |
+|       137 | 0x5f148fa6a7fe1f282341c8fc54b781e42b09a518 |     369.633 |              1.49324 |     50 | nan             |
+
+### Allocations on top nft volume
+- `0x7c28f579fdb12b52a3a0bf27cef63868e26e0020`
+
+| LP_addr                                    |   allocation | LP_addr_label   |   percent |   balance |
+|:-------------------------------------------|-------------:|:----------------|----------:|----------:|
+| 0xf0a8802509421df907188434d4fc230cf9271672 |     539865   | shrimp1         |    0.925  |    583638 |
+| 0x655efe6eb2021b8cefe22794d90293aec37bb325 |     177965   | unknown         |    0.925  |    192395 |
+| 0xcf8a4b99640defaf99acae9d770dec9dff37927d |     145327   | shrimp2         |    0.51   |    284955 |
+| 0xf062d1b3f658ad32f7896a76807b05ba7a9e7720 |      53424.8 | unknown         |    0.2175 |    245631 |
+| 0x69e0e2b3d523d3b247d798a49c3fa022a46dd6bd |      32507   | unknown         |    0.25   |    130028 |
+
+- `0x001c3d7debe7eff4550a3414ad2fd542020ef947`
+
+| LP_addr                                    |   allocation | LP_addr_label   |   percent |   balance |
+|:-------------------------------------------|-------------:|:----------------|----------:|----------:|
+| 0x8e0d1207e312a1761319825882209f0c737f24fc |     963.834  | unknown         |    0.047  |  20507.1  |
+| 0xc3fa54ee9eb7e4e5c746088b86df940b9352bfd6 |     411.099  | unknown         |    0.0435 |   9450.56 |
+| 0x5b520e99129194105c465230d3cb6c9e4b172147 |     243.572  | unknown         |    0.009  |  27063.5  |
+| 0x15a919e499d88a71e94d34ab76986799f69b4ff2 |     171.186  | unknown         |    0.07   |   2445.51 |
+| 0x44091f0b9619cf836e0f03a49f8c959e2993bd20 |      50.8302 | unknown         |    0.02   |   2541.51 |
+
+- `0x57c0d4d22ab9fb7071838db5a4ba3b1ddc4b3e24`
+
+| LP_addr                                    |   allocation | LP_addr_label   |   percent |   balance |
+|:-------------------------------------------|-------------:|:----------------|----------:|----------:|
+| 0x291f34a777edbba13554f72e79d74862f5e824e2 |      6028.73 | unknown         |    0.185  |  32587.7  |
+| 0xf128f48aa68012e2010a1731c068c9af933f6832 |      4425.43 | unknown         |    0.365  |  12124.5  |
+| 0x663052ad99b85a8c35040c4fd1cc87620f4b61f1 |      2487.3  | shrimp3         |    0.005  | 497460    |
+| 0x28f39db34bd36ba5dc9009015f67a57f90748422 |      1867.88 | unknown         |    0.1875 |   9962.03 |
+| 0x8978be1b2082d10ea95533d2897ddab53afb97e9 |      1592.16 | unknown         |    0.005  | 318432    |
+
+- `0x2d84d50f8e310d370a6d7d0d883f3e537ecce382`
+
+| LP_addr                                    |   allocation | LP_addr_label   |   percent |   balance |
+|:-------------------------------------------|-------------:|:----------------|----------:|----------:|
+| 0x291f34a777edbba13554f72e79d74862f5e824e2 |     6028.73  | unknown         |   0.185   |  32587.7  |
+| 0x663052ad99b85a8c35040c4fd1cc87620f4b61f1 |     2487.3   | shrimp3         |   0.005   | 497460    |
+| 0x28f39db34bd36ba5dc9009015f67a57f90748422 |     1867.88  | unknown         |   0.1875  |   9962.03 |
+| 0x8978be1b2082d10ea95533d2897ddab53afb97e9 |     1592.16  | unknown         |   0.005   | 318432    |
+| 0x44091f0b9619cf836e0f03a49f8c959e2993bd20 |      212.851 | unknown         |   0.08375 |   2541.51 |
+
+- `0x21457717da4d370ea16a8eaa3cb46ba2f9797ab4`
+
+| LP_addr                                    |   allocation | LP_addr_label   |   percent |         balance |
+|:-------------------------------------------|-------------:|:----------------|----------:|----------------:|
+| 0xe0dc24a3d7478eb840dc63baa20fcb06cdb123be |      48211.7 | unknown         |  0.5      | 96423.4         |
+| 0x1fac06467b7d9c3a9361f42ab7bd09e6a5719ec7 |      38799.2 | unknown         |  0.5      | 77598.3         |
+| 0xd13294fa603d9243fb9aeff338a5639ee1bd6599 |      26499   | unknown         |  0.5      | 52998           |
+| 0x4ab8e275379d57520f09af5b55e650911d3ab81e |      21568.3 | unknown         |  0.5      | 43136.6         |
+| 0x8475b523b5fa2db7b77eb5f14edabdefc2102698 |      20662.4 | psdn            |  0.016789 |     1.23071e+06 |
+
+- `0x8e1517057a2b30f29e0713c52ca5d957c887da74`
+
+| LP_addr                                    |   allocation | LP_addr_label   |   percent |   balance |
+|:-------------------------------------------|-------------:|:----------------|----------:|----------:|
+| 0x663052ad99b85a8c35040c4fd1cc87620f4b61f1 |     179085   | shrimp3         |     0.36  |    497460 |
+| 0x8978be1b2082d10ea95533d2897ddab53afb97e9 |     114635   | unknown         |     0.36  |    318432 |
+| 0xcf8a4b99640defaf99acae9d770dec9dff37927d |     102584   | shrimp2         |     0.36  |    284955 |
+| 0xb1e24789311f14b6270b2b4ed11a768bf9b547ff |      46269.9 | unknown         |     0.34  |    136088 |
+| 0xce74a5886ea7a8a675d8fb5fc11a697a23fe1dc8 |      13016.4 | unknown         |     0.095 |    137015 |
+
