@@ -1,8 +1,6 @@
-name: DF daily report
+name: DF weekly report, schedule for Thursday 00:00 UTC
 
 on:
-  schedule:
-    - cron: "0 9 * * *"
   workflow_dispatch:
     inputs:
       amt_of_tokens:
@@ -52,7 +50,7 @@ jobs:
           echo "SECRET_SEED=${{ secrets.SECRET_SEED }}" >> $GITHUB_ENV
           echo "date=$(date -dlast-thursday '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "now=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
-          echo "CSV_DIR=strat/parsed_data/df-flow-day-$(date '+%W-%a-%Y-%m-%d')" >> $GITHUB_ENV
+          echo "CSV_DIR=strat/parsed_data_manual/df-flow-week-$(date '+%W-%a-%Y-%m-%d')" >> $GITHUB_ENV
           echo "TOKEN_AMOUNT=50000" >> $GITHUB_ENV
 
       - name: Run dftool getrate
@@ -85,11 +83,11 @@ jobs:
           ./dftool calc $CSV_DIR ${{ github.event.inputs.amt_of_tokens || secrets.TOKEN_AMOUNT }} OCEAN
       - name: eda
         run: |
-          python ./strat/dftooleda.py eda $CSV_DIR daily-report
+          python ./strat/dftooleda.py eda $CSV_DIR weekly-report
       - name: Commit and Push Changes
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add strat/DAILY_REPORT.MD
+          git add .
           git commit -m "Updated on `date` with GitHub Actions" || echo "No Changes to Commit"
           git push origin main || echo "No Changes to Commit"

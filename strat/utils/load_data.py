@@ -7,14 +7,6 @@ from datetime import datetime
 
 
 def load_ve_balance(dir_path):
-    # ve_balance = pd.DataFrame(
-    #     columns=[
-    #         "LP_addr",
-    #         "balance",
-    #         "perc",
-    #         "week",
-    #     ]
-    # )
 
     file_path = dir_path + "/vebals.csv"
     df = pd.read_csv(file_path)

@@ -1,8 +1,8 @@
-name: DF weekly report
+name: DF weekly report, schedule for Thursday 00:00 UTC
 
 on:
   schedule:
-    - cron: "0 0 * * 2"
+    - cron: "0 0 * * 4"
   workflow_dispatch:
     inputs:
       amt_of_tokens:
@@ -52,7 +52,7 @@ jobs:
           echo "SECRET_SEED=${{ secrets.SECRET_SEED }}" >> $GITHUB_ENV
           echo "date=$(date -dlast-thursday '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "now=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
-          echo "CSV_DIR=strat/parsed_data/df-flow-week-$(date '+%W-%a-%Y-%m-%d')" >> $GITHUB_ENV
+          echo "CSV_DIR=strat/parsed_data_weekly/df-flow-week-$(date '+%W-%a-%Y-%m-%d')" >> $GITHUB_ENV
           echo "TOKEN_AMOUNT=50000" >> $GITHUB_ENV
 
       - name: Run dftool getrate

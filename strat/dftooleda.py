@@ -1,6 +1,8 @@
 import sys
 from datetime import datetime
 
+today = datetime.now()
+
 from enforce_typing import enforce_types
 
 from utils.load_data import (
@@ -61,9 +63,9 @@ def do_eda(dir_path, markdown_file, mode, text):
         # ]
     )
 
-    today = datetime.now().strftime("%W-%a-%Y-%m-%d")
+    dt = today.strftime("%W-%a-%Y-%m-%d")
 
-    markdown_text = f"""## {text}-{today} 
+    markdown_text = f"""## {text}-{dt} 
 
 ### Top nft volume on Polygon, base token Polygon
 {nft_vol1m}
@@ -72,7 +74,7 @@ def do_eda(dir_path, markdown_file, mode, text):
     with open(markdown_file, mode) as f:
         f.write(markdown_text)
 
-    markdown_text = f"""## {text}-{today} 
+    markdown_text = f"""## {text}-{dt} 
 
 ### Top nft volume on Polygon, base token Ocean
 {nft_vol2m}
@@ -81,7 +83,7 @@ def do_eda(dir_path, markdown_file, mode, text):
     with open(markdown_file, "a") as f:
         f.write(markdown_text)
 
-    markdown_text = f"""## {text}-{today} 
+    markdown_text = f"""## {text}-{dt} 
 
 ### Top nft volume on ethereum, base token Ocean
 {nft_vol3m}
@@ -135,9 +137,10 @@ def do_eda(dir_path, markdown_file, mode, text):
 def do_main():
     assert sys.argv[1] == "eda"
     dir_path = sys.argv[2]
+    dt = today.strftime("%W-%a-%Y-%m-%d")
     if sys.argv[3] == "weekly-report":
-        markdown_file = "strat/WEEKLY_REPORT.MD"
-        mode = "a"
+        markdown_file = f"strat/reports/weekly/week-{dt}.MD"
+        mode = "w"
         text = "Week"
     elif sys.argv[3] == "voting-report":
         markdown_file = "strat/VOTING_REPORT.MD"
