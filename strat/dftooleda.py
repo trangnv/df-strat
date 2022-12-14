@@ -45,7 +45,7 @@ def top_nft_allocation(nft_vol, ve_allocation):
 
 
 @enforce_types
-def do_eda_weekly(dir_path, markdown_file, text):
+def do_nft_vol(dir_path, markdown_file, text):
     # total_reward = get_total_reward(dir_path)
 
     lp_reward = load_lp_reward(dir_path, wallet_dict)
@@ -87,7 +87,7 @@ def do_eda_weekly(dir_path, markdown_file, text):
 
 
 @enforce_types
-def do_eda_allocation(dir_path, markdown_file, text):
+def do_allocation(dir_path, markdown_file, text):
     ve_balance = load_ve_balance(dir_path)
     ve_allocation_pct = load_ve_allocation_pct(dir_path)
     ve_allocation = cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict)
@@ -111,12 +111,12 @@ def do_main():
     if sys.argv[3] == "weekly-report":
         markdown_file = f"strat/reports/weekly/week-{dt}.MD"
         text = "Week"
-        do_eda_weekly(dir_path, markdown_file, text)
+        do_nft_vol(dir_path, markdown_file, text)
 
     elif sys.argv[3] == "lp-report":
         markdown_file = f"strat/reports/allocation/allocation-{dt}.MD"
         text = "Allocation"
-        do_eda_allocation(markdown_file)
+        do_allocation(markdown_file, markdown_file, text)
 
 
 if __name__ == "__main__":
