@@ -1,36 +1,18 @@
 import sys
 from datetime import datetime
-
-today = datetime.now()
-
 from enforce_typing import enforce_types
 
 from utils.load_data import (
-    # get_total_reward,
     load_ve_balance,
     load_ve_allocation_pct,
     load_lp_reward,
-    load_nft_lp_reward,
     load_nft_vol,
-    load_nft_reward,
+    load_nft_lp_reward,
     cal_ve_allocation,
+    wallet_dict,
 )
 
-
-wallet_dict = {
-    "0x8475b523b5fa2db7b77eb5f14edabdefc2102698": "psdn",
-    "0x2e434c18ae93ee2da937222ea5444692ed265ac0": "whale1",
-    "0xc1b8665bae4389d95d558ff3a0e58c2a24625f63": "whale2",
-    "0xac517ed8283d629dd01fac97ece9f91b218203f9": "whale3",
-    "0xf0a8802509421df907188434d4fc230cf9271672": "wallet_1",
-    "0xcf8a4b99640defaf99acae9d770dec9dff37927d": "wallet_2",
-    "0x663052ad99b85a8c35040c4fd1cc87620f4b61f1": "wallet_3",
-    "0xeb18bad7365a40e36a41fb8734eb0b855d13b74f": "wallet_4",
-    "0x8978be1b2082d10ea95533d2897ddab53afb97e9": "wallet_5",
-    "0x655efe6eb2021b8cefe22794d90293aec37bb325": "wallet_6",
-    "0xce74a5886ea7a8a675d8fb5fc11a697a23fe1dc8": "wallet_7",
-    "0xf062d1b3f658ad32f7896a76807b05ba7a9e7720": "wallet_8",
-}
+today = datetime.now()
 
 
 def top_table_markdown(df, top=5):
@@ -49,35 +31,17 @@ def top_nft_allocation(nft_vol, ve_allocation):
 
 
 @enforce_types
-def do_nft_vol(dir_path, markdown_file, text):
-    # total_reward = get_total_reward(dir_path)
-
-    lp_reward = load_lp_reward(dir_path, wallet_dict)
-    ve_balance = load_ve_balance(dir_path)
-    ve_allocation_pct = load_ve_allocation_pct(dir_path)
-    ve_allocation = cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict)
+def do_nft_vol(dir_path, markdown_file):
     basetoken_addresses = [
         "0xpolygon",
         "0x282d8efce846a88b159800bd4130ad77443fa1a1",
         "0x967da4048cd07ab37855c090aaf366e4ce1b9f48",
     ]
     nft_vol = {}
-    # top_nft_allocation = {}
     for basetoken_addr in basetoken_addresses:
         nft_vol[basetoken_addr] = load_nft_vol(dir_path, basetoken_addr, wallet_dict)
 
-    # for basetoken_addr in basetoken_addresses:
-    #     top_nft_allocation[basetoken_addr] = top_nft_allocation(
-    #         nft_vol[basetoken_addr], ve_allocation
-    #     )
-
-    # nft_lp_reward = load_nft_lp_reward(dir_path, wallet_dict)
-    # nft_reward = load_nft_reward(dir_path)
-
-    top_reward_receiver = top_table_markdown(lp_reward, top=10)
-
     dt = today.strftime("%W-%a-%Y-%m-%d")
-
     markdown_text = f"""# Week-{dt} 
 ## Top NFT volume
 ### Polygon, base token Ocean
@@ -85,30 +49,52 @@ def do_nft_vol(dir_path, markdown_file, text):
 
 ### Ethereum, base token Ocean
 {top_table_markdown(nft_vol['0x967da4048cd07ab37855c090aaf366e4ce1b9f48'][['nft_addr', 'owner_label','vol_amt','vol_perc']])}
+
 """
     with open(markdown_file, "w") as f:
         f.write(markdown_text)
 
 
 @enforce_types
-def do_allocation(dir_path, markdown_file, text):
+def do_allocation(dir_path, markdown_file):
     ve_balance = load_ve_balance(dir_path)
     ve_allocation_pct = load_ve_allocation_pct(dir_path)
     ve_allocation = cal_ve_allocation(ve_balance, ve_allocation_pct, wallet_dict)
 
-    psdn_allocation = ve_allocation.loc[ve_allocation["LP_addr_label"] == "psdn"]
-    # balance	locked_amt
-    # 	'locked_amt'	'unlock_time'		perc	chainID	nft_addr	percent	allocation
-    # dt = today.strftime("%W-%a-%Y-%m-%d")
+    psdn_allocation = ve_allocation[
+        ["chainID", "balance", "perc", "nft_addr", "allocation", "percent"]
+    ].loc[ve_allocation["LP_addr_label"] == "psdn"]
     _ve_allocation = ve_allocation[
-        ["nft_addr", "LP_addr", "allocation", "percent", "LP_addr_label"]
+        ["chainID", "nft_addr", "LP_addr", "allocation", "percent", "LP_addr_label"]
     ]
     markdown_text = f"""## Top LP
-{top_table_markdown(_ve_allocation,20)}
+{top_table_markdown(_ve_allocation,10)}
 
-## PSDN
+## PSDN allocation
 {top_table_markdown(psdn_allocation)}
 
+"""
+    with open(markdown_file, "a") as f:
+        f.write(markdown_text)
+
+
+@enforce_types
+def do_reward(dir_path, markdown_file):
+    lp_reward = load_lp_reward(dir_path, wallet_dict)
+    markdown_text = f"""## Reward
+
+{top_table_markdown(lp_reward, 10)}
+"""
+    with open(markdown_file, "a") as f:
+        f.write(markdown_text)
+
+
+@enforce_types
+def do_nft_lp_reward(dir_path, markdown_file):
+    lp_reward = load_nft_lp_reward(dir_path, wallet_dict)
+    markdown_text = f"""## Reward 2
+
+{top_table_markdown(lp_reward, 10)}
 """
     with open(markdown_file, "a") as f:
         f.write(markdown_text)
@@ -119,12 +105,20 @@ def do_main():
     assert sys.argv[1] == "eda"
     dir_path = sys.argv[2]
     dt = today.strftime("%W-%a-%Y-%m-%d")
-    if sys.argv[3] == "report":
-        markdown_file = f"strat/reports/report-{dt}.MD"
-        text = "NFT volume"
-        do_nft_vol(dir_path, markdown_file, text)
-        text = "Allocation"
-        do_allocation(dir_path, markdown_file, text)
+    if sys.argv[3] == "weekly-report":
+        markdown_file = f"strat/reports/Weekly-report-{dt}.MD"
+
+        # nft volume report
+        do_nft_vol(dir_path, markdown_file)
+
+        # allocation report
+        do_allocation(dir_path, markdown_file)
+
+        # reward report
+        do_reward(dir_path, markdown_file)
+
+        # reward report
+        do_nft_lp_reward(dir_path, markdown_file)
 
 
 if __name__ == "__main__":
