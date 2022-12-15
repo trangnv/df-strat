@@ -41,7 +41,7 @@ def do_nft_vol(dir_path, markdown_file, hour=""):
     for basetoken_addr in basetoken_addresses:
         nft_vol[basetoken_addr] = load_nft_vol(dir_path, basetoken_addr, wallet_dict)
 
-    markdown_text = f"""# ---{hour}---
+    markdown_text = f"""# {hour}
 ## Top NFT volume
 ### Polygon, base token Ocean
 {top_table_markdown(nft_vol['0x282d8efce846a88b159800bd4130ad77443fa1a1'][['nft_addr', 'owner_label','vol_amt','vol_perc']])}
