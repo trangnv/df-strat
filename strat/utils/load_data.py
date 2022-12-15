@@ -102,24 +102,6 @@ def load_nft_reward(dir_path):
 
     df = pd.read_csv(file_path)
     df["week"] = week
-
-    # x = []
-    # y = []
-    # for nft_addr in df["nft_addr"].unique():
-    #     x.append(nft_addr)
-    #     amt = df[df["nft_addr"] == nft_addr]["amt"].sum()
-    #     y.append(amt)
-
-    # total_reward = sum(y)
-
-    # nft_reward = pd.DataFrame(
-    #     {
-    #         "nft": x,
-    #         "reward_amount": y,
-    #         "reward_perc": [y1 / total_reward * 100 for y1 in y],
-    #         "week": week,
-    #     }
-    # )
     return df
 
 
@@ -142,13 +124,11 @@ def load_nft_vol(dir_path, basetoken_addr, wallet_dict):
 
         df = pd.read_csv(file_path)
         df["week"] = week
-        print("querying nft owner")
         df["owner"] = df["nft_addr"].apply(lambda x: query_nft_owner(f'"{x}"', chainID))
 
         df.sort_values(["vol_amt"], ascending=[False]).reset_index(
             drop=True, inplace=True
         )
-        # nft_vol = nft_vol.append(df, ignore_index=True)
         nft_vol = pd.concat([nft_vol, df], ignore_index=True, sort=False)
 
     nft_vol = nft_vol.loc[nft_vol["basetoken_addr"] == basetoken_addr]

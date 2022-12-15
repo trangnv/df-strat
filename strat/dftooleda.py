@@ -20,14 +20,14 @@ def top_table_markdown(df, top=5):
     return top_table_markdown
 
 
-def top_nft_allocation(nft_vol, ve_allocation):
-    for nft_addr in list(nft_vol["nft_addr"].head(5).unique()):
-        _df = ve_allocation.loc[ve_allocation["nft_addr"] == nft_addr]
-        _df = _df.sort_values(["allocation"], ascending=[False]).reset_index(drop=True)
-        top_nft_allocation = top_table_markdown(
-            _df[["LP_addr", "allocation", "LP_addr_label", "percent", "balance"]]
-        )
-    return top_nft_allocation
+# def top_nft_allocation(nft_vol, ve_allocation):
+#     for nft_addr in list(nft_vol["nft_addr"].head(5).unique()):
+#         _df = ve_allocation.loc[ve_allocation["nft_addr"] == nft_addr]
+#         _df = _df.sort_values(["allocation"], ascending=[False]).reset_index(drop=True)
+#         top_nft_allocation = top_table_markdown(
+#             _df[["LP_addr", "allocation", "LP_addr_label", "percent", "balance"]]
+#         )
+#     return top_nft_allocation
 
 
 @enforce_types
@@ -78,17 +78,6 @@ def do_allocation(dir_path, markdown_file):
         f.write(markdown_text)
 
 
-# @enforce_types
-# def do_reward(dir_path, markdown_file):
-#     lp_reward = load_lp_reward(dir_path, wallet_dict)
-#     markdown_text = f"""## Reward
-
-# {top_table_markdown(lp_reward, 10)}
-# """
-#     with open(markdown_file, "a") as f:
-#         f.write(markdown_text)
-
-
 @enforce_types
 def do_nft_lp_reward(dir_path, markdown_file):
     nft_lp_reward = load_nft_lp_reward(dir_path, wallet_dict)
@@ -113,9 +102,6 @@ def do_main():
 
         # allocation report
         do_allocation(dir_path, markdown_file)
-
-        # reward report
-        do_reward(dir_path, markdown_file)
 
         # reward report
         do_nft_lp_reward(dir_path, markdown_file)
