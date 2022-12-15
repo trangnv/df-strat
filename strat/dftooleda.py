@@ -78,23 +78,23 @@ def do_allocation(dir_path, markdown_file):
         f.write(markdown_text)
 
 
-@enforce_types
-def do_reward(dir_path, markdown_file):
-    lp_reward = load_lp_reward(dir_path, wallet_dict)
-    markdown_text = f"""## Reward
+# @enforce_types
+# def do_reward(dir_path, markdown_file):
+#     lp_reward = load_lp_reward(dir_path, wallet_dict)
+#     markdown_text = f"""## Reward
 
-{top_table_markdown(lp_reward, 10)}
-"""
-    with open(markdown_file, "a") as f:
-        f.write(markdown_text)
+# {top_table_markdown(lp_reward, 10)}
+# """
+#     with open(markdown_file, "a") as f:
+#         f.write(markdown_text)
 
 
 @enforce_types
 def do_nft_lp_reward(dir_path, markdown_file):
-    lp_reward = load_nft_lp_reward(dir_path, wallet_dict)
-    markdown_text = f"""## Reward 2
-
-{top_table_markdown(lp_reward, 10)}
+    nft_lp_reward = load_nft_lp_reward(dir_path, wallet_dict)
+    _df = nft_lp_reward[["nft_addr", "LP_addr", "amt", "LP_addr_label"]]
+    markdown_text = f"""## Reward
+{top_table_markdown(_df, 10)}
 """
     with open(markdown_file, "a") as f:
         f.write(markdown_text)
