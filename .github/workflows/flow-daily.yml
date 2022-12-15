@@ -54,7 +54,7 @@ jobs:
           echo "now=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "CSV_DIR=strat/tmp" >> $GITHUB_ENV
           echo "TOKEN_AMOUNT=50000" >> $GITHUB_ENV
-          echo "markdown_file=strat/reports/$(date '+%W-%Y-%m-%d-%a')-daily.MD"
+          echo "markdown_file=strat/reports/$(date '+%W-%Y-%m-%d-%a')-daily.MD" >> $GITHUB_ENV
 
       - name: Run dftool getrate
         run: |
