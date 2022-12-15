@@ -111,8 +111,8 @@ def do_main():
         markdown_file = f"strat/reports/{dt}-daily.MD"
 
         # nft volume report
-        hour = today.strftime("%H-%M")
-        do_nft_vol(dir_path, markdown_file, hour=f"Time: {hour}")
+        hour = today.strftime("%H:%M")
+        do_nft_vol(dir_path, markdown_file, hour=f"Time {hour}")
 
         # allocation report
         do_allocation(dir_path, markdown_file)
