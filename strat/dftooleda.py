@@ -143,7 +143,7 @@ def do_nft_lp_reward(dir_path, markdown_file):
         "Chain ID",
         "NFT address (reward source)",
         "LP address",
-        "Reward amount [OCEAN]",
+        "Reward amount (OCEAN)",
         "LP label",
     ]
     markdown_text = f"""## Reward
