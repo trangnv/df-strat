@@ -20,7 +20,7 @@ def top_table_markdown(df, top=5):
     return top_table_markdown
 
 
-# def top_nft_allocation(nft_vol, ve_allocation):
+# def top_nft_allocation(nft_vol, ve_allocation): # get top LP for each nft_addr
 #     for nft_addr in list(nft_vol["nft_addr"].head(5).unique()):
 #         _df = ve_allocation.loc[ve_allocation["nft_addr"] == nft_addr]
 #         _df = _df.sort_values(["allocation"], ascending=[False]).reset_index(drop=True)
@@ -31,7 +31,7 @@ def top_table_markdown(df, top=5):
 
 
 @enforce_types
-def do_nft_vol(dir_path, markdown_file):
+def do_nft_vol(dir_path, markdown_file, hour=""):
     basetoken_addresses = [
         "0xpolygon",
         "0x282d8efce846a88b159800bd4130ad77443fa1a1",
@@ -41,8 +41,7 @@ def do_nft_vol(dir_path, markdown_file):
     for basetoken_addr in basetoken_addresses:
         nft_vol[basetoken_addr] = load_nft_vol(dir_path, basetoken_addr, wallet_dict)
 
-    dt = today.strftime("%W-%a-%Y-%m-%d")
-    markdown_text = f"""# Week-{dt} 
+    markdown_text = f"""# ---{hour}---
 ## Top NFT volume
 ### Polygon, base token Ocean
 {top_table_markdown(nft_vol['0x282d8efce846a88b159800bd4130ad77443fa1a1'][['nft_addr', 'owner_label','vol_amt','vol_perc']])}
@@ -51,7 +50,7 @@ def do_nft_vol(dir_path, markdown_file):
 {top_table_markdown(nft_vol['0x967da4048cd07ab37855c090aaf366e4ce1b9f48'][['nft_addr', 'owner_label','vol_amt','vol_perc']])}
 
 """
-    with open(markdown_file, "w") as f:
+    with open(markdown_file, "a") as f:
         f.write(markdown_text)
 
 
@@ -93,12 +92,27 @@ def do_nft_lp_reward(dir_path, markdown_file):
 def do_main():
     assert sys.argv[1] == "eda"
     dir_path = sys.argv[2]
-    dt = today.strftime("%W-%a-%Y-%m-%d")
+
     if sys.argv[3] == "weekly-report":
-        markdown_file = f"strat/reports/Weekly-report-{dt}.MD"
+        dt = today.strftime("%W-%Y-%m-%d-%a")
+        markdown_file = f"strat/reports/{dt}-weekly.MD"
 
         # nft volume report
         do_nft_vol(dir_path, markdown_file)
+
+        # allocation report
+        do_allocation(dir_path, markdown_file)
+
+        # reward report
+        do_nft_lp_reward(dir_path, markdown_file)
+
+    if sys.argv[3] == "daily-report":
+        dt = today.strftime("%W-%Y-%m-%d-%a")
+        markdown_file = f"strat/reports/{dt}-daily.MD"
+
+        # nft volume report
+        hour = today.strftime("%H-%M")
+        do_nft_vol(dir_path, markdown_file, hour=f"Time: {hour}")
 
         # allocation report
         do_allocation(dir_path, markdown_file)

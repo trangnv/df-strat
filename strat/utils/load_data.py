@@ -90,14 +90,7 @@ def load_lp_reward(dir_path, wallet_dict):
 
 
 def load_nft_reward(dir_path):
-    # nft_reward = pd.DataFrame(
-    #     columns=[
-    #         "nft",
-    #         "reward_amount",
-    #         "reward_perc",
-    #         "week",
-    #     ]
-    # )
+
     file_path = dir_path + "/rewardsinfo-OCEAN.csv"
 
     df = pd.read_csv(file_path)
@@ -178,9 +171,6 @@ def submitQuery(query: str, chainID: int) -> dict:
     result = request.json()
 
     return result
-
-
-#   orders(where: {datatoken_: {nft: "0xaa8af64ee67bc318d513a6562f096db7fcd5233b"}}) {
 
 
 def query_nft_orders(nft_addr, chainID):
