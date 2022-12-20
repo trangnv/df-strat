@@ -58,6 +58,7 @@ jobs:
           echo "CSV_DIR=strat/parsed_data_weekly/df-flow-week-$(date '+%W-%Y-%m-%d-%a')" >> $GITHUB_ENV
           echo "ZIP_FILE=strat/parsed_data_weekly/df-flow-week-$(date '+%W-%Y-%m-%d-%a').zip" >> $GITHUB_ENV
           echo "TOKEN_AMOUNT=50000" >> $GITHUB_ENV
+          echo "W3STOKEN=${{ secrets.W3STOKEN }}" >> $GITHUB_ENV
 
       - name: Run dftool getrate
         run: |
@@ -102,6 +103,5 @@ jobs:
           git push origin main || echo "No Changes to Commit"
       - name: Upload zip file to IPFS
         run: |
-          echo "W3STOKEN=${{ secrets.W3STOKEN }}" >> $GITHUB_ENV
           npm install
           node web3Storage/put-file.js --token=$W3STOKEN $ZIP_FILE
