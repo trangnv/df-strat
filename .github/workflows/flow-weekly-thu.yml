@@ -102,6 +102,6 @@ jobs:
           git push origin main || echo "No Changes to Commit"
       - name: Upload zip file to IPFS
         run: |
-          echo "W3STOKEN=${{ secrets.W3STOKEN }}" >> .env
+          echo "W3STOKEN=${{ secrets.W3STOKEN }}" >> $GITHUB_ENV
           npm install
           node web3Storage/put-file.js --token=$W3STOKEN $ZIP_FILE
