@@ -52,7 +52,8 @@ jobs:
           echo "SECRET_SEED=${{ secrets.SECRET_SEED }}" >> $GITHUB_ENV
           echo "date=$(date -dlast-thursday '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "now=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
-          echo "CSV_DIR=strat/parsed_data_weekly/df-flow-week-$(date '+%W-%a-%Y-%m-%d')" >> $GITHUB_ENV
+          echo "CSV_DIR=strat/parsed_data_weekly/df-flow-week-$(date '+%W-%Y-%m-%d-%a')" >> $GITHUB_ENV
+          echo "ZIP_FLIE=strat/parsed_data_weekly/df-flow-week-$(date '+%W-%Y-%m-%d-%a').zip" >> $GITHUB_ENV
           echo "TOKEN_AMOUNT=50000" >> $GITHUB_ENV
 
       - name: Run dftool getrate
@@ -83,9 +84,12 @@ jobs:
       - name: Run dftool calc
         run: |
           ./dftool calc $CSV_DIR ${{ github.event.inputs.amt_of_tokens || secrets.TOKEN_AMOUNT }} OCEAN
-      - name: eda
+      - name: Run EDA
         run: |
           python ./strat/dftooleda.py eda $CSV_DIR weekly-report
+      - name: Run zip file
+        run: |
+          zip  -r $ZIP_FILE $CSV_DIR
       - name: Commit and Push Changes
         run: |
           git config --local user.email "actions@github.com"
@@ -93,3 +97,8 @@ jobs:
           git add .
           git commit -m "Updated on `date` with GitHub Actions" || echo "No Changes to Commit"
           git push origin main || echo "No Changes to Commit"
+      - name: Upload zip file to IPFS
+        run: |
+          echo "W3STOKEN=${{ secrets.W3STOKEN }}" >> .env
+          npm install
+          node web3Storage/put-file.js --token=$W3STOKEN $ZIP_FILE
