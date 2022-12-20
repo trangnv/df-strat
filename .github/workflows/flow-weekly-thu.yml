@@ -56,7 +56,7 @@ jobs:
           echo "date=$(date -dlast-thursday '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "now=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "CSV_DIR=strat/parsed_data_weekly/df-flow-week-$(date '+%W-%Y-%m-%d-%a')" >> $GITHUB_ENV
-          echo "ZIP_FLIE=strat/parsed_data_weekly/df-flow-week-$(date '+%W-%Y-%m-%d-%a').zip" >> $GITHUB_ENV
+          echo "ZIP_FILE=strat/parsed_data_weekly/df-flow-week-$(date '+%W-%Y-%m-%d-%a').zip" >> $GITHUB_ENV
           echo "TOKEN_AMOUNT=50000" >> $GITHUB_ENV
 
       - name: Run dftool getrate
