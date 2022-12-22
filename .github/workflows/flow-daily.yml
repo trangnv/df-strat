@@ -1,8 +1,8 @@
-name: DF daily report, runs every 6 hours
+name: DF daily report, runs everyday at 00:00 UTC
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 0 * * *"
   workflow_dispatch:
     inputs:
       amt_of_tokens:
@@ -52,7 +52,7 @@ jobs:
           echo "SECRET_SEED=${{ secrets.SECRET_SEED }}" >> $GITHUB_ENV
           echo "date=$(date -dlast-thursday '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "now=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
-          echo "CSV_DIR=strat/tmp" >> $GITHUB_ENV
+          echo "CSV_DIR=strat/parsed_data_daily/df-flow-day-$(date '+%W-%Y-%m-%d-%a')" >> $GITHUB_ENV
           echo "TOKEN_AMOUNT=50000" >> $GITHUB_ENV
           echo "markdown_file=strat/reports/$(date '+%W-%Y-%m-%d-%a')-daily.MD" >> $GITHUB_ENV
 
