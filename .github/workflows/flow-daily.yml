@@ -1,14 +1,14 @@
 name: DF daily report, runs everyday at 00:00 UTC
 
-on:
-  schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
-    inputs:
-      amt_of_tokens:
-        description: "Amount of tokens to distribute"
-        required: true
-        default: "50000"
+# on:
+#   schedule:
+#     - cron: "0 0 * * *"
+#   workflow_dispatch:
+#     inputs:
+#       amt_of_tokens:
+#         description: "Amount of tokens to distribute"
+#         required: true
+#         default: "50000"
 
 jobs:
   calculate-reward-and-eda:
